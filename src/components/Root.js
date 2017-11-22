@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { Provider } from "react-redux"
-import configureStore from "../store/configure-store"
-import App from '../containers/App'
-
-const store = configureStore();
+import { rootStore } from "../store"
+import App from './App'
 
 class Root extends Component {
     render() {
-        return <Provider store={store}>
+        return <Provider store={rootStore}>
             <App />
         </Provider>
     }

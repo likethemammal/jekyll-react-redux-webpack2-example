@@ -1,5 +1,30 @@
+import autoprefixer from 'autoprefixer'
+import pixrem from 'pixrem'
 
 import path from 'path'
+
+const css_loader = {
+    loader: 'css-loader',
+    options: {
+        modules: true,
+        localIdentName: '[name].[local]',
+        importLoaders: 1,
+    },
+}
+
+const postcss_loader = {
+    loader: 'postcss-loader',
+    options: {
+        plugins: function () {
+            return [
+                autoprefixer('last 10 versions', 'ie 10'),
+                pixrem({
+                    rootValue: 10,
+                }),
+            ]
+        }
+    }
+}
 
 const plugins = [
 
@@ -16,14 +41,9 @@ const config = {
     output: {
         filename: '[name].bundle.js',
         path:  path.resolve(__dirname, 'dist/'),
-        // publicPath: '/public',
     },
 
-    // devServer: {
-    //     contentBase: path.resolve(__dirname, './src'),
-    // },
-
-    // devtool: 'source-map',
+    devtool: 'source-map',
 
     module: {
         rules: [
@@ -38,10 +58,17 @@ const config = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: { modules: true },
-                    },
+                    css_loader,
+                    postcss_loader,
+                ],
+            },
+            {
+                test: /\.less/,
+                use: [
+                    'style-loader',
+                    css_loader,
+                    postcss_loader,
+                    'less-loader',
                 ],
             },
         ]

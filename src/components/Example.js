@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 
+import css from './Example.less'
+
 export default class Example extends Component {
+    static defaultProps = {
+        className: css.container,
+    }
+
     render() {
-        return <div className='example'>
-            Examp
+
+        const { className } = this.props
+
+        return <div className={className}>
         </div>
     }
 }
